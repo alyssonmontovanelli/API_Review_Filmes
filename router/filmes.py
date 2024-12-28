@@ -12,18 +12,25 @@ from sqlalchemy.exc import SQLAlchemyError
 router = APIRouter(prefix="/filmes")
 
 
-
-# Rotas - Puxar dados
-@router.get("/")
-def root():
-   return {"message":"FastAPI"}
-
-
 # Função para para evitar local_kw
 def get_session_local():
    yield SessionLocal()
 
-# Post - Adicionar um filme 
+
+
+# Rotas - Puxar dados
+@router.get("/")
+def buscaFilmes(db: Session = Depends(get_session_local)):
+   try:
+      filmes = db.query(Filme).all()
+      return filmes
+   except Exception as e:
+      raise HTTPException(status_code=500, detail=f"Erro ao buscar filme: \n{e}")
+
+
+
+#  ------------------------
+#  Post - Adicionar um filme 
 @router.post("/")
 def adicionarFilme(data_filme: CriaFilme, db: Session = Depends(get_session_local)):
    try:
@@ -41,3 +48,4 @@ def adicionarFilme(data_filme: CriaFilme, db: Session = Depends(get_session_loca
         raise HTTPException(status_code=500, detail=f"Erro ao adicionar filme {e}")
 
 
+# Get
