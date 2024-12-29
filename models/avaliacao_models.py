@@ -30,3 +30,4 @@ class Avaliacao(Base):
     filme = relationship("Filme", back_populates="avaliacoes")
 
 from models.filmes_models import Filme
+
