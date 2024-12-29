@@ -8,6 +8,8 @@ from config.db import conn
 from models.filmes_models import Filme
 from sqlalchemy.exc import SQLAlchemyError
 
+from utils.request_api import requests, requestFilmeAPI, criaDictFilmeAPI
+
 # Sinalizando rotas
 router = APIRouter(prefix="/filmes")
 
@@ -59,7 +61,21 @@ def adicionarFilme(data_filme: CriaFilme, db: Session = Depends(get_session_loca
 
 # ------------------------------
 # Endpoint - POST - Adiciona vários com base na API
+@router.post("/reqapi/{nome_filme}")
+def adicionarFilme_API(nome_filme: str, db: Session = Depends(get_session_local)):
+   try:
+      novo_filme_API = requestFilmeAPI(nome_filme)
+      novo_filme = Filme(**novo_filme_API)
+      
+      # Adicionando o filme à sessão do banco de dados
+      db.add(novo_filme)
+      db.commit()  # Commit para garantir a persistência dos dados
+      db.refresh(novo_filme)  # Atualiza o objeto com o ID gerado pelo banco
 
+      return {"message": "Filme adicionado com sucesso!", "filme_id": novo_filme.id}
+   except SQLAlchemyError as e:
+      db.rollback()  # Rollback em caso de erro
+      raise HTTPException(status_code=500, detail=f"Erro ao adicionar filme {e}")
 
 
 #  ------------------------
