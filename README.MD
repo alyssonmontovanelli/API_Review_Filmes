@@ -58,3 +58,8 @@
     - <strong>2ª Parte</strong> ➡️ Importação da função "requestFilmeAPI" diretamente na rota POST que irá realizar o cadastro no filme com base no nome informado pelo usuário. Como mostra o recorte abaixo:
     
     ![fastAPI/doc](img/post_requisicao_api.png)
+
+<br>
+
+## Melhorias futuras
+Conforme for aprimorando e integrando mais funcionalidades ao código, seria interessante criar uma camada de serviço, onde serão realizadas todas as operações lógicas, assim, modularizando o projeto e deixando a camada de rotas apenas com a função de controlar o fluxo.
