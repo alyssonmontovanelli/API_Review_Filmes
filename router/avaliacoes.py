@@ -2,10 +2,8 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from schemas.avaliacoes_schemas import CriaAvaliacao
 from config.db import SessionLocal
-from config.db import conn
 from models.avaliacao_models import Avaliacao
 from sqlalchemy.exc import SQLAlchemyError
-from utils.request_api import requests, requestFilmeAPI, criaDictFilmeAPI
 
 # Sinalizando rotas
 router = APIRouter(prefix="/avaliacoes")
@@ -29,21 +27,22 @@ def buscaAvaliacoes_All(db: Session = Depends(get_session_local)):
 @router.post("/")
 def adicionaAvaliacao(data_avaliacao: CriaAvaliacao, db: Session = Depends(get_session_local)):
    try:
-        # Criando um objeto Filme a partir dos dados do schema
+        # Criando um objeto Avaliação a partir dos dados do schema
       if not (1 <= data_avaliacao.nota <= 10):
          raise HTTPException(status_code=400, detail="A nota deve ser um valor entre 1 e 10.")
 
       nova_avaliacao = Avaliacao(**data_avaliacao.model_dump())
 
-      # Adicionando o filme à sessão do banco de dados
+      # Adicionando o Avaliação à sessão do banco de dados
       db.add(nova_avaliacao)
-      db.commit()  # Commit para garantir a persistência dos dados
+      db.commit() 
       db.refresh(nova_avaliacao)  # Atualiza o objeto com o ID gerado pelo banco
 
       return {"message": "Review adicionado com sucesso!", "ID": nova_avaliacao.id}
    except SQLAlchemyError as e:
       db.rollback()  # Rollback em caso de erro
       raise HTTPException(status_code=500, detail=f"Erro ao adicionar Avaliação {e}")
+
 
 ## Endpoint - DELETE - Deletar avaliações 
 @router.delete("/delete/{avaliacao_id}")

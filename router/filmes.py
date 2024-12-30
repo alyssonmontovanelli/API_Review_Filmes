@@ -4,7 +4,7 @@ from schemas.filmes_schemas import CriaFilme, UpdateFilme
 from config.db import SessionLocal
 from models.filmes_models import Filme
 from sqlalchemy.exc import SQLAlchemyError
-from utils.request_api import requests, requestFilmeAPI, criaDictFilmeAPI
+from utils.request_api import requestFilmeAPI
 
 # Sinalizando rotas
 router = APIRouter(prefix="/filmes")
@@ -41,18 +41,18 @@ def buscaFilmes(filme_id: str, db: Session = Depends(get_session_local)):
 @router.post("/")
 def adicionarFilme(data_filme: CriaFilme, db: Session = Depends(get_session_local)):
    try:
-        # Criando um objeto Filme a partir dos dados do schema
-        novo_filme = Filme(**data_filme.model_dump())
+      # Criando um objeto Filme a partir dos dados do schema
+      novo_filme = Filme(**data_filme.model_dump())
 
-        # Adicionando o filme à sessão do banco de dados
-        db.add(novo_filme)
-        db.commit()  # Commit para garantir a persistência dos dados
-        db.refresh(novo_filme)  # Atualiza o objeto com o ID gerado pelo banco
+      # Adicionando o filme à sessão do banco de dados
+      db.add(novo_filme)
+      db.commit() 
+      db.refresh(novo_filme)  # Atualiza o objeto com o ID gerado pelo banco
 
-        return {"message": "Filme adicionado com sucesso!", "filme_id": novo_filme.id}
+      return {"message": "Filme adicionado com sucesso!", "filme_id": novo_filme.id}
    except SQLAlchemyError as e:
-        db.rollback()  # Rollback em caso de erro
-        raise HTTPException(status_code=500, detail=f"Erro ao adicionar filme {e}")
+      db.rollback()  
+      raise HTTPException(status_code=500, detail=f"Erro ao adicionar filme {e}")
 
 # ------------------------------
 # Endpoint - POST - Adiciona filme com base na API de dados abertos
