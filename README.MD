@@ -63,5 +63,11 @@ No arquivo requirements.txt estão todas as ferramentas utilizadas, bem como as 
 
 <br>
 
+## Amostra das relações no banco de dados
+
+  ![fastAPI/doc](img/relacao_banco_dados.png)
+
+<br>
+
 ## Melhorias futuras
 Conforme for aprimorando e integrando mais funcionalidades ao código, seria interessante criar uma camada de serviço, onde serão realizadas todas as operações lógicas, assim, modularizando o projeto e deixando a camada de rotas apenas com a função de controlar o fluxo.
