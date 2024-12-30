@@ -2,6 +2,7 @@
 
 ### <font color="green">Descrição</font>
 <p>Este projeto implementa um sistema de cadastro de filmes e avaliações de usuários, permitindo que os filmes sejam avaliados com uma nota de 1 a 10 e acompanhados de um comentário. O sistema foi desenvolvido com FastAPI para a API e SQLAlchemy para a interação com o banco de dados relacional. O banco de dados armazena informações sobre filmes e avaliações. </p>
+<br>
 
 ### <font color="green">Tecnologias Utilizadas</font>
 - FastAPI: Framework Python para criação da API.
@@ -10,3 +11,10 @@
 - Pydantic: Validação e serialização de dados.
 - Uvicorn: Servidor ASGI para rodar a aplicação.
 
+<br>
+
+
+### Estrutura do Bacno de Dados
+<br>
+
+![Exemplo de Diagrama](img/relacao_db.png)
