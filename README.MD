@@ -28,8 +28,25 @@
 - ### Modelagem do Banco de Dados:
   - Optei pela construção/modelagem das tabelas utilizando o SQLAlchemy (pastas config e models deste projeto), abaixo estão recortes dos scripts com os parâmetros e regras utilizadas.
   
-![Exemplo de Diagrama](img/modelagem_tb_filmes.png)
-![Exemplo de Diagrama](img/modelagem_tb_avaliacoes.png)
+   ![modelagem de tb_filmes](img/modelagem_tb_filmes.png)
+   ![modelagem de tb_avaliacoes](img/modelagem_tb_avaliacoes.png)
 
+<br>
 
+## Automação e Escalabilidade
+- ### Criação de Duas Camadas de Rotas
+  - #### Rotas de filmes.py
+    - <strong>GET/</strong> ➡️ Exibe todos os filmes presentes no banco de dados;
+    - <strong>GET/{id}</strong> ➡️ Retorna o filme com base no id fornecido;
+    - <strong>POST/</strong> ➡️ Cria um novo filme manualmente em tb_filmes;
+    - <strong>POST/reqapi/{nome_filme}</strong> ➡️ Recebe nome do filme e faz requisição para a API de filmes OMDb, os dados são tratados e registrados automáticamente na tabela;
+    - <strong>PATCH/{id}</strong> ➡️ Altera algum campo do filme com o id informado;
+    - <strong>DELETE/{id}</strong> ➡️ Deleta registro com base no id informado.
+  - #### Rotas de avaliacoes.py
+    - <strong>GET/</strong> ➡️ Retorna todas as avaliações cadastradas em tb_avaliacoes;
+    - <strong>POST/</strong> ➡️ Cadastra nova avaliação informando o id do filme a ser avaliado;
+    - <strong>DELETE/</strong> ➡️ Deleta registro com base no id informado.
+    
+    <br> 
 
+![fastAPI/doc](img/fastapi_doc.png)
