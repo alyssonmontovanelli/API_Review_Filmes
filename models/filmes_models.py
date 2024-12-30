@@ -15,5 +15,5 @@ class Filme(Base):
     # Relacionamento com Avaliacao (um filme pode ter muitas avaliações)
     avaliacoes = relationship("Avaliacao", back_populates="filme", cascade="all, delete-orphan")
 
-# 
+
 from models.avaliacao_models import Avaliacao

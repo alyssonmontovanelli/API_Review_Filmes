@@ -3,7 +3,6 @@ from sqlalchemy.sql.sqltypes import Integer, String
 from sqlalchemy.orm import relationship
 from config.db import Base
 
-
 class Avaliacao(Base):
     __tablename__ = "tb_avaliacao"
 
