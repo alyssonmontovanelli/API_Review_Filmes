@@ -24,23 +24,37 @@ def buscaAvaliacoes_All(db: Session = Depends(get_session_local)):
    except Exception as e:
       raise HTTPException(status_code=500, detail=f"Erro ao buscar filmes: \n{e}")
 
-## Endpoint - GET - Requisitar todas as avaliações de um determinado filme (ID)
 
 ## Enpoint - POST - Cadastrar novas avaliações
 @router.post("/")
 def adicionaAvaliacao(data_avaliacao: CriaAvaliacao, db: Session = Depends(get_session_local)):
    try:
         # Criando um objeto Filme a partir dos dados do schema
-        nova_avaliacao = Avaliacao(**data_avaliacao.model_dump())
+      if not (1 <= data_avaliacao.nota <= 10):
+         raise HTTPException(status_code=400, detail="A nota deve ser um valor entre 1 e 10.")
 
-        # Adicionando o filme à sessão do banco de dados
-        db.add(nova_avaliacao)
-        db.commit()  # Commit para garantir a persistência dos dados
-        db.refresh(nova_avaliacao)  # Atualiza o objeto com o ID gerado pelo banco
+      nova_avaliacao = Avaliacao(**data_avaliacao.model_dump())
 
-        return {"message": "Review adicionado com sucesso!", "ID": nova_avaliacao.id}
+      # Adicionando o filme à sessão do banco de dados
+      db.add(nova_avaliacao)
+      db.commit()  # Commit para garantir a persistência dos dados
+      db.refresh(nova_avaliacao)  # Atualiza o objeto com o ID gerado pelo banco
+
+      return {"message": "Review adicionado com sucesso!", "ID": nova_avaliacao.id}
    except SQLAlchemyError as e:
-        db.rollback()  # Rollback em caso de erro
-        raise HTTPException(status_code=500, detail=f"Erro ao adicionar Avaliação {e}")
+      db.rollback()  # Rollback em caso de erro
+      raise HTTPException(status_code=500, detail=f"Erro ao adicionar Avaliação {e}")
 
 ## Endpoint - DELETE - Deletar avaliações 
+@router.delete("/delete/{avaliacao_id}")
+async def excluiAvaliacao(avaliacao_id: str, db: Session = Depends(get_session_local)):
+   try:
+      avaliacao_unica = db.query(Avaliacao).filter(Avaliacao.id == avaliacao_id).first()
+      if not avaliacao_unica:
+         raise HTTPException(status_code=404, detail="Avaliacao não encontrada")
+      
+      db.delete(avaliacao_unica)
+      db.commit()
+      return f"Review com ID nº {avaliacao_id} foi excluído com sucesso!"
+   except Exception as e:
+      raise HTTPException(status_code=500, detail=f"Erro ao buscar Avaliaçãp: \n{e}")
