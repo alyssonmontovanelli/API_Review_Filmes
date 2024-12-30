@@ -2,7 +2,6 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from schemas.filmes_schemas import CriaFilme, UpdateFilme
 from config.db import SessionLocal
-from config.db import conn
 from models.filmes_models import Filme
 from sqlalchemy.exc import SQLAlchemyError
 from utils.request_api import requests, requestFilmeAPI, criaDictFilmeAPI
@@ -110,22 +109,3 @@ async def excluiFilme(filme_id: str, db: Session = Depends(get_session_local)):
       return f"Filme com ID nº: {filme_id} foi excluído com sucesso!"
    except Exception as e:
       raise HTTPException(status_code=500, detail=f"Erro ao buscar filme: \n{e}")
-
-
-# ------------------------------
-# # Endpoint - DELETE - Deleta todos os filmes
-# @router.delete("/delete/all")
-# def excluiFilme_All(db: Session = Depends(get_session_local)):
-#    try:
-#       filmes = db.query(Filme).all()
-
-#       if not filmes:
-#          raise HTTPException(status_code=404, detail="Nenhum filme encontrado para excluir.")
-
-#       db.query(Filme).delete()
-#       db.commit()
-
-#       return {'messagem': 'Todos os filmes foram deletados'}
-#    except Exception as e:
-#       raise HTTPException(status_code=500, detail=f"Erro ao buscar filmes: \n{e}")
-

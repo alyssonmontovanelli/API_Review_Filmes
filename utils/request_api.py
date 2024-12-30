@@ -33,6 +33,3 @@ def requestFilmeAPI(nome_filme):
    
    except Exception as e:
       raise Exception(f"erro {str(e)}")
-
-      
-

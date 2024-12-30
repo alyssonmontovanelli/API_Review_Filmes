@@ -1,21 +1,8 @@
-from sqlalchemy import ForeignKey, Table, Column
+from sqlalchemy import ForeignKey, Column
 from sqlalchemy.sql.sqltypes import Integer, String
 from sqlalchemy.orm import relationship
 from config.db import Base
 
-
-# avaliacao = Table("tb_avaliacao", meta_data,
-#                Column("id", Integer, primary_key=True, index=True, autoincrement=True),
-#                Column("nome_avaliador", String(225),nullable = False),
-#                Column("filme_id", Integer, ForeignKey("tb_filme.id", ondelete = "CASCADE"), nullable = False),
-#                Column("nota", Integer, nullable = False),
-#                Column("comentario", String(500), nullable = False),
-#                Column("filme", relationship("Filme", 
-#                         back_populates = "avaliacoes")),
-#                )
-
-
-# meta_data.create_all(engine)
 
 class Avaliacao(Base):
     __tablename__ = "tb_avaliacao"
