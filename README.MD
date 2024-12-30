@@ -23,5 +23,13 @@
   - <strong>tb_avaliacoes</strong>: Informações sobre avaliações de cada filme, como nome do avaliador, nota, comentário e código ID do filme.
 
 - ### Relacionamentos:
-  - A tabela tb_avaliacoes está relacionada à tabela tb_filmes através da chave estrangeira "filme_id", através de uma relação muitos para um, ou seja, um filme pode ter diversas avaliações conectadas a ele.
+  - A tabela tb_avaliacoes está relacionada à tabela tb_filmes por intermédio da chave estrangeira "filme_id", através de uma relação muitos para um, ou seja, um filme pode ter diversas avaliações conectadas a ele.
+
+- ### Modelagem do Banco de Dados:
+  - Optei pela construção/modelagem das tabelas utilizando o SQLAlchemy (pastas config e models deste projeto), abaixo estão recortes dos scripts com os parâmetros e regras utilizadas.
+  
+![Exemplo de Diagrama](img/modelagem_tb_filmes.png)
+![Exemplo de Diagrama](img/modelagem_tb_avaliacoes.png)
+
+
 
