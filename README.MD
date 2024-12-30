@@ -19,8 +19,8 @@
 ![Exemplo de Diagrama](img/relacao_db.png)
 
 - ### Tabelas Criadas:
-  - <strong>tb_filmes</strong>: Contém informações a respeito dos filmes, como título (nome), ano de lançamento, gênero (ação, aventura, etc) e diretor;
-  - <strong>tb_avaliacoes</strong>: Informações sobre avaliações de cada filme, como nome do avaliador, nota, comentário e código ID do filme.
+  - <strong>tb_filmes</strong> ➡️ Contém informações a respeito dos filmes, como título (nome), ano de lançamento, gênero (ação, aventura, etc) e diretor;
+  - <strong>tb_avaliacoes</strong> ➡️ Informações sobre avaliações de cada filme, como nome do avaliador, nota, comentário e código ID do filme.
 
 - ### Relacionamentos:
   - A tabela tb_avaliacoes está relacionada à tabela tb_filmes por intermédio da chave estrangeira "filme_id", através de uma relação muitos para um, ou seja, um filme pode ter diversas avaliações conectadas a ele.
@@ -46,7 +46,15 @@
     - <strong>GET/</strong> ➡️ Retorna todas as avaliações cadastradas em tb_avaliacoes;
     - <strong>POST/</strong> ➡️ Cadastra nova avaliação informando o id do filme a ser avaliado;
     - <strong>DELETE/</strong> ➡️ Deleta registro com base no id informado.
-    
-    <br> 
+   
+   ![fastAPI/doc](img/fastapi_doc.png)
+ 
 
-![fastAPI/doc](img/fastapi_doc.png)
+- ### Consumo de API Pública 
+  - #### Dividi esta etapa em 2 partes:
+    - <strong>1ª Parte</strong> ➡️ Criação de duas funções no arquivo "request_api.py", a "requestFilmeAPI", responsável por receber uma string com nome do filme, realizar a requisição no https://www.omdbapi.com/ e converter o JSON em dicionário python, e a segunda função é "criaDictFilmeAPI", que recebe esse JSON e modifica sua esturura, adequando-o ao Schema do banco de dados;
+   
+    ![fastAPI/doc](img/request_api.png)
+    - <strong>2ª Parte</strong> ➡️ Importação da função "requestFilmeAPI" diretamente na rota POST que irá realizar o cadastro no filme com base no nome informado pelo usuário. Como mostra o recorte abaixo:
+    
+    ![fastAPI/doc](img/post_requisicao_api.png)
